@@ -1,0 +1,17 @@
+{
+  "base": "main",
+  "php": "8.2",
+  "chain": false,
+  "jobs": [
+    {
+      "name": "phpunit-unit",
+      "run": "vendor/bin/phpunit --testsuite=Unit",
+      "paths": ["**/*.php", "!vendor/**", "phpunit.xml*", "composer.lock"]
+    },
+    {
+      "name": "phpunit-integration",
+      "run": "vendor/bin/phpunit --testsuite=Integration",
+      "paths": ["**/*.php", "!vendor/**", "phpunit.xml*", "composer.lock"]
+    }
+  ]
+}

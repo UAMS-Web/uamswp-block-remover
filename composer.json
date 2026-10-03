@@ -1,0 +1,34 @@
+{
+    "name": "uams-web/uamswp-block-remover",
+    "description": "Remove specific Gutenberg blocks from the editor, network-wide or per site.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "brain/monkey": "^2.7",
+        "phpunit/phpunit": "^9.6",
+        "wp-phpunit/wp-phpunit": "~7.1.0",
+        "yoast/phpunit-polyfills": "^4.0"
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "7.4.33"
+        }
+    },
+    "scripts": {
+        "test": [
+            "@test:unit",
+            "@test:integration"
+        ],
+        "test:unit": "phpunit --testsuite=Unit",
+        "test:integration": "phpunit --testsuite=Integration"
+    },
+    "scripts-descriptions": {
+        "test": "Run both suites, each in its own process, so the Unit suite never sees WordPress.",
+        "test:unit": "Run the suite that needs no WordPress and no database.",
+        "test:integration": "Run the suite that boots WordPress through wp-phpunit against the test database."
+    }
+}

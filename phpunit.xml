@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="tests/bootstrap.php"
+         defaultTestSuite="Unit"
+         colors="true"
+         failOnWarning="true"
+         failOnRisky="true"
+         failOnEmptyTestSuite="true"
+         beStrictAboutOutputDuringTests="true">
+    <!--
+        PHPUnit 9, not Pest: the plugin declares `Requires PHP: 7.4`, and no maintained
+        Pest major runs below PHP 8.2 (see the tests skill, "Can this repository run Pest").
+
+        Two suites, run as two processes (composer test:unit, composer test:integration).
+        tests/bootstrap.php boots WordPress only for the Integration suite, so a unit test
+        that reaches an unmocked WordPress function fails instead of quietly passing.
+        defaultTestSuite keeps a bare `vendor/bin/phpunit` on the Unit suite.
+    -->
+    <testsuites>
+        <!-- No WordPress, no database: WordPress functions are mocked with Brain Monkey. -->
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/Unit</directory>
+        </testsuite>
+        <!-- Boots WordPress through wp-phpunit against the test database. -->
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/Integration</directory>
+        </testsuite>
+    </testsuites>
+    <coverage>
+        <include>
+            <directory suffix=".php">./admin</directory>
+            <file>./uamswp-block-remover.php</file>
+        </include>
+    </coverage>
+</phpunit>
