@@ -1,0 +1,9 @@
+# Development files stay out of `git archive` and GitHub's source downloads,
+# so a release built from either carries only the plugin.
+/.gitattributes  export-ignore
+/.gitignore      export-ignore
+/composer.json   export-ignore
+/composer.lock   export-ignore
+/local-ci.json   export-ignore
+/phpunit.xml     export-ignore
+/tests           export-ignore
