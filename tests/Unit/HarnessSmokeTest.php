@@ -12,9 +12,6 @@ use UamswpBlockRemover\Tests\Support\UnitTestCase;
 
 final class HarnessSmokeTest extends UnitTestCase
 {
-    /**
-     * @return void
-     */
     public function test_harness_loads_plugin_surface(): void
     {
         $this->assertTrue(\function_exists('uamswp_block_remover_default_blocks'));
