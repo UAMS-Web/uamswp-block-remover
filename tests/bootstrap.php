@@ -80,6 +80,14 @@ if (! defined('ABSPATH')) {
 }
 
 /*
+ * The editor context class the block filter type-hints. Core declares it; the
+ * Unit suite has no WordPress, so load an empty stand-in before the plugin.
+ */
+if (! class_exists('WP_Block_Editor_Context', false)) {
+    require __DIR__.'/Support/WP_Block_Editor_Context.php';
+}
+
+/*
  * Load definitions+registrations inside one Brain Monkey session. Do not
  * define permanent WordPress function stubs in this file — Patchwork treats
  * this bootstrap as too early and Brain Monkey cannot redefine them in tests
