@@ -14,11 +14,6 @@ declare(strict_types=1);
  * Locate WordPress. Unset, WP_TESTS_ABSPATH defaults to the install this
  * checkout sits in (<wordpress>/wp-content/plugins/<plugin>/tests/Integration),
  * five levels up. Exported so wp-tests-config.php reads the same answer.
- *
- * A checkout that is not inside a WordPress install must set WP_TESTS_ABSPATH
- * to a core copy, for example one fetched with:
- *   wp core download --path=/tmp/wordpress
- *   WP_TESTS_ABSPATH=/tmp/wordpress composer test:integration
  */
 $wordpress = rtrim((string) (getenv('WP_TESTS_ABSPATH') ?: dirname(__DIR__, 5)), '/').'/';
 
@@ -76,15 +71,17 @@ require_once $wpPhpunit.'/includes/functions.php';
 
 /*
  * Load the plugin the way WordPress would, before anything runs: on
- * muplugins_loaded, the earliest hook the test bootstrap fires. A plugin that
- * depends on another plugin requires that one first, in the same closure.
+ * muplugins_loaded, the earliest hook the test bootstrap fires.
  */
-tests_add_filter('muplugins_loaded', static function () {
+tests_add_filter('muplugins_loaded', static function (): void {
     require dirname(__DIR__, 2).'/uamswp-block-remover.php';
 });
 
+/*
+ * PHPUnit 9 runs core's WP_UnitTestCase unchanged, so the Integration tests
+ * extend it directly. The adapted base case in the tests skill's template is
+ * for PHPUnit 10 and later, which this plugin's PHP 7.4 floor rules out.
+ */
 require $wpPhpunit.'/includes/bootstrap.php';
-
-require_once dirname(__DIR__).'/Support/IntegrationTestCase.php';
 
 // cspell:ignore ABSPATH autoloaded muplugins
