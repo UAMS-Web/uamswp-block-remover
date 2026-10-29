@@ -3,19 +3,20 @@
  * Plugin Name:       UAMSWP Block Remover
  * Plugin URI:        https://example.com
  * Description:       Remove specific Gutenberg blocks from the editor. Network-activates across all subsites; site-activates for a single site.
- * Version:           1.3.0
+ * Version:           1.1.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Your Name
  * License:           GPL v2 or later
  * Text Domain:       uamswp-block-remover
+ * Network:           true
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'UAMSWP_BLOCK_REMOVER_VERSION', '1.2.0' );
+define( 'UAMSWP_BLOCK_REMOVER_VERSION', '1.1.0' );
 define( 'UAMSWP_BLOCK_REMOVER_DIR',     plugin_dir_path( __FILE__ ) );
 define( 'UAMSWP_BLOCK_REMOVER_URL',     plugin_dir_url( __FILE__ ) );
 define( 'UAMSWP_BLOCK_REMOVER_OPTION',  'uamswp_block_remover_settings' );
@@ -46,58 +47,26 @@ function uamswp_block_remover_default_blocks(): array {
     return [
         'core/archives',
         'core/audio',
-        'core/avatar',
         'core/calendar',
         'core/classic',
-        'core/categories',
-        'core/column',
-        'core/columns',
-        'core/comment-author-name',
-        'core/comment-content',
-        'core/comment-date',
-        'core/comment-edit-link',
-        'core/comment-reply-link',
-        'core/comment-template',
-        'core/comments',
-        'core/comments-pagination',
-        'core/comments-pagination-next',
-        'core/comments-pagination-previous',
-        'core/comments-title',
+        'core/code',
         'core/cover',
-        'core/gallery',
+        'core/freeform',
         'core/latest-comments',
         'core/latest-posts',
-        'core/loginout',
         'core/missing',
         'core/more',
         'core/nextpage',
-        'core/post-author',
-        'core/post-author-biography',
-        'core/post-author-name',
-        'core/post-comments',
-        'core/post-comments-form',
-        'core/post-navigation-link',
-        'core/core/post-template',
-        'core/post-terms',
-        'core/query',
-        'core/query-no-results',
-        'core/query-pagination',
-        'core/query-pagination-next',
-        'core/query-pagination-numbers',
-        'core/query-pagination-previous',
-        'core/query-title',
-        'core/query-total',
+        'core/preformatted',
+        'core/pullquote',
         'core/rss',
         'core/search',
+        'core/shortcode',
         'core/social-links',
         'core/spacer',
         'core/table-of-contents',
         'core/tag-cloud',
-        'core/template-part',
-        'core/term-description',
-        'core/text-columns',
         'core/verse',
-        'core/video',
     ];
 }
 
