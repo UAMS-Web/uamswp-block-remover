@@ -6,7 +6,8 @@
  * Version:           1.3.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
- * Author:            Your Name
+ * Author:            UAMS Web Services
+ * Author URI:        https://communications.uams.edu/web/
  * License:           GPL v2 or later
  * Text Domain:       uamswp-block-remover
  */
