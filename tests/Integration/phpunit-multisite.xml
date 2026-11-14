@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="bootstrap.php"
+         colors="true"
+         failOnWarning="true"
+         failOnRisky="true"
+         beStrictAboutOutputDuringTests="true">
+    <!--
+        The multisite run of the Integration suite. WordPress' test bootstrap installs a
+        network when WP_MULTISITE is 1, which the `test:integration:multisite` composer
+        script sets. The classes under ./Multisite assume a network and the classes
+        elsewhere assume a single site, so each configuration runs only its own. Run it
+        from the repository root with `composer test:integration:multisite`.
+    -->
+    <testsuites>
+        <testsuite name="Multisite">
+            <directory suffix="Test.php">./Multisite</directory>
+        </testsuite>
+    </testsuites>
+    <coverage>
+        <include>
+            <directory suffix=".php">../../admin</directory>
+            <file>../../uamswp-block-remover.php</file>
+        </include>
+    </coverage>
+</phpunit>

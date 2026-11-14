@@ -18,6 +18,7 @@
         <testsuite name="Integration">
             <directory suffix="Test.php">.</directory>
             <exclude>./vendor</exclude>
+            <exclude>./Multisite</exclude>
         </testsuite>
     </testsuites>
     <coverage>
