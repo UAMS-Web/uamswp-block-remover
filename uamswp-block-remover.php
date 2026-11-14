@@ -178,7 +178,7 @@ function uamswp_block_remover_get_settings(): array
         $settings = get_option(UAMSWP_BLOCK_REMOVER_OPTION, false);
     }
 
-    if ($settings === false || ! is_array($settings)) {
+    if (! is_array($settings)) {
         return $default;
     }
 
@@ -255,6 +255,9 @@ register_uninstall_hook(__FILE__, 'uamswp_block_remover_uninstall');
 // Load admin UI
 // ---------------------------------------------------------------------------
 
+// PHP resolves a relative include against the including file's directory, so a path
+// without the directory constant still finds the same file and this mutant cannot be killed.
+// @pest-mutate-ignore: ConcatRemoveLeft
 require_once UAMSWP_BLOCK_REMOVER_DIR.'admin/settings-page.php';
 
 // ---------------------------------------------------------------------------
