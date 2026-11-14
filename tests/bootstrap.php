@@ -10,14 +10,18 @@
 
 declare(strict_types=1);
 
-require_once dirname(__DIR__).'/vendor/autoload.php';
+use function Brain\Monkey\setUp;
+use function Brain\Monkey\Functions\when;
+use function Brain\Monkey\tearDown;
+
+require_once __DIR__.'/../vendor/autoload.php';
 
 /*
  * Patchwork first: it can only redefine functions declared in files loaded
  * after it, so loading it before the plugin is what lets a test mock one of the
  * plugin's own functions, not only WordPress'.
  */
-require_once dirname(__DIR__).'/vendor/antecedent/patchwork/Patchwork.php';
+require_once __DIR__.'/../vendor/antecedent/patchwork/Patchwork.php';
 
 /*
  * Plugin/theme files open with an ABSPATH guard. Define it so they load,
@@ -33,43 +37,37 @@ if (! defined('ABSPATH')) {
  * this bootstrap as too early and Brain Monkey cannot redefine them in tests
  * (DefinedTooEarly). See the tests skill and the wordpress-theme template.
  */
-Brain\Monkey\setUp();
+setUp();
 
-Brain\Monkey\Functions\when('plugin_dir_path')->justReturn(dirname(__DIR__).'/');
-Brain\Monkey\Functions\when('plugin_dir_url')->justReturn('https://example.test/wp-content/plugins/'.basename(dirname(__DIR__)).'/');
-Brain\Monkey\Functions\when('plugin_basename')->alias(static function ($file) {
-    return basename(dirname($file)).'/'.basename($file);
-});
-Brain\Monkey\Functions\when('is_multisite')->justReturn(false);
-Brain\Monkey\Functions\when('get_site_option')->alias(static function ($key, $default = false) {
-    return $default;
-});
-Brain\Monkey\Functions\when('get_option')->alias(static function ($key, $default = false) {
-    return $default;
-});
-Brain\Monkey\Functions\when('update_option')->justReturn(null);
-Brain\Monkey\Functions\when('register_activation_hook')->justReturn(null);
-Brain\Monkey\Functions\when('register_deactivation_hook')->justReturn(null);
-Brain\Monkey\Functions\when('register_uninstall_hook')->justReturn(null);
-Brain\Monkey\Functions\when('load_plugin_textdomain')->justReturn(null);
-Brain\Monkey\Functions\when('is_admin')->justReturn(false);
-Brain\Monkey\Functions\when('wp_enqueue_script')->justReturn(null);
-Brain\Monkey\Functions\when('wp_enqueue_style')->justReturn(null);
-Brain\Monkey\Functions\when('wp_register_script')->justReturn(null);
-Brain\Monkey\Functions\when('wp_register_style')->justReturn(null);
-Brain\Monkey\Functions\when('wp_localize_script')->justReturn(null);
-Brain\Monkey\Functions\when('esc_html')->returnArg();
-Brain\Monkey\Functions\when('esc_attr')->returnArg();
-Brain\Monkey\Functions\when('esc_url')->returnArg();
-Brain\Monkey\Functions\when('__')->returnArg();
-Brain\Monkey\Functions\when('_e')->justReturn(null);
-Brain\Monkey\Functions\when('esc_html__')->returnArg();
-Brain\Monkey\Functions\when('esc_attr__')->returnArg();
+when('plugin_dir_path')->justReturn(__DIR__.'/../');
+when('plugin_dir_url')->justReturn('https://example.test/wp-content/plugins/'.basename(dirname(__DIR__)).'/');
+when('plugin_basename')->alias(static fn($file): string => basename(dirname($file)).'/'.basename($file));
+when('is_multisite')->justReturn(false);
+when('get_site_option')->alias(static fn($key, $default = false) => $default);
+when('get_option')->alias(static fn($key, $default = false) => $default);
+when('update_option')->justReturn();
+when('register_activation_hook')->justReturn();
+when('register_deactivation_hook')->justReturn();
+when('register_uninstall_hook')->justReturn();
+when('load_plugin_textdomain')->justReturn();
+when('is_admin')->justReturn(false);
+when('wp_enqueue_script')->justReturn();
+when('wp_enqueue_style')->justReturn();
+when('wp_register_script')->justReturn();
+when('wp_register_style')->justReturn();
+when('wp_localize_script')->justReturn();
+when('esc_html')->returnArg();
+when('esc_attr')->returnArg();
+when('esc_url')->returnArg();
+when('__')->returnArg();
+when('_e')->justReturn();
+when('esc_html__')->returnArg();
+when('esc_attr__')->returnArg();
 
-if (is_readable(dirname(__DIR__).'/uamswp-block-remover.php')) {
-    require_once dirname(__DIR__).'/uamswp-block-remover.php';
+if (is_readable(__DIR__.'/../uamswp-block-remover.php')) {
+    require_once __DIR__.'/../uamswp-block-remover.php';
 }
 
-Brain\Monkey\tearDown();
+tearDown();
 
 // cspell:ignore ABSPATH

@@ -184,6 +184,7 @@ function uamswp_block_remover_update_settings( array $settings ): bool {
     if ( uamswp_block_remover_is_network_active() ) {
         return update_site_option( UAMSWP_BLOCK_REMOVER_OPTION, $settings );
     }
+
     return update_option( UAMSWP_BLOCK_REMOVER_OPTION, $settings );
 }
 
@@ -219,6 +220,7 @@ function uamswp_block_remover_activate( bool $network_wide ): void {
         }
     }
 }
+
 register_activation_hook( __FILE__, 'uamswp_block_remover_activate' );
 
 function uamswp_block_remover_uninstall(): void {
@@ -236,6 +238,7 @@ function uamswp_block_remover_uninstall(): void {
         delete_option( UAMSWP_BLOCK_REMOVER_OPTION );
     }
 }
+
 register_uninstall_hook( __FILE__, 'uamswp_block_remover_uninstall' );
 
 // ---------------------------------------------------------------------------
@@ -275,7 +278,7 @@ function uamswp_block_remover_filter_blocks( $allowed, WP_Block_Editor_Context $
         : uamswp_block_remover_default_blocks();
 
     // Nothing blocked — preserve whatever $allowed already is.
-    if ( empty( $blocked ) ) {
+    if ( $blocked === [] ) {
         return $allowed;
     }
 
@@ -289,7 +292,7 @@ function uamswp_block_remover_filter_blocks( $allowed, WP_Block_Editor_Context $
     // Another plugin already produced an explicit allowlist — subtract from it.
     if ( is_array( $allowed ) ) {
         return array_values(
-            array_filter( $allowed, fn( $name ) => ! isset( $blocked_set[ $name ] ) )
+            array_filter( $allowed, fn( string $name ): bool => ! isset( $blocked_set[ $name ] ) )
         );
     }
 
@@ -302,9 +305,10 @@ function uamswp_block_remover_filter_blocks( $allowed, WP_Block_Editor_Context $
     );
 
     return array_values(
-        array_filter( $all_names, fn( $name ) => ! isset( $blocked_set[ $name ] ) )
+        array_filter( $all_names, fn( int|string $name ): bool => ! isset( $blocked_set[ $name ] ) )
     );
 }
+
 add_filter( 'allowed_block_types_all', 'uamswp_block_remover_filter_blocks', 9999, 2 );
 
 // ---------------------------------------------------------------------------
@@ -324,7 +328,7 @@ function uamswp_block_remover_enqueue_embed_filter(): void {
         : [];
 
     // Nothing to do if no embed variations are blocked.
-    if ( empty( $blocked_embeds ) ) {
+    if ( $blocked_embeds === [] ) {
         return;
     }
 
@@ -342,4 +346,5 @@ function uamswp_block_remover_enqueue_embed_filter(): void {
         [ 'blockedEmbeds' => $blocked_embeds ]
     );
 }
+
 add_action( 'enqueue_block_editor_assets', 'uamswp_block_remover_enqueue_embed_filter' );
