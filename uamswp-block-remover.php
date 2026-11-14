@@ -5,7 +5,7 @@ declare(strict_types=1);
  * Plugin Name:       UAMSWP Block Remover
  * Plugin URI:        https://github.com/UAMS-Web/uamswp-block-remover
  * Description:       Remove specific Gutenberg blocks from the editor. Network-activates across all subsites; site-activates for a single site.
- * Version:           1.3.0
+ * Version:           1.3.1
  * Requires at least: 6.0
  * Requires PHP:      8.2
  * Author:            UAMS Web Services
@@ -17,7 +17,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('UAMSWP_BLOCK_REMOVER_VERSION', '1.3.0');
+define('UAMSWP_BLOCK_REMOVER_VERSION', '1.3.1');
 define('UAMSWP_BLOCK_REMOVER_DIR', plugin_dir_path(__FILE__));
 define('UAMSWP_BLOCK_REMOVER_URL', plugin_dir_url(__FILE__));
 define('UAMSWP_BLOCK_REMOVER_OPTION', 'uamswp_block_remover_settings');
