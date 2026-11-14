@@ -62,7 +62,7 @@ function uamswp_test_capture(callable $render): string
 
 /**
  * The hook registrations the plugin made while it loaded, as recorded by
- * tests/bootstrap.php: each entry is [function name, arguments].
+ * tests/Support/load-plugin.php: each entry is [function name, arguments].
  *
  * @return list<array{0: string, 1: list<mixed>}>
  */

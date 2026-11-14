@@ -11,7 +11,8 @@ name: CI
 # ruleset requires `CI` and never a job by name. Keep `needs:` naming every job in this file.
 # The repository is public, so the jobs run without a `RUN_REMOTE_CI` gate.
 #
-# Mutation testing is off here and turned on by its own ticket (UAMS-Web/uamswp-block-remover#29).
+# Mutation testing runs on the PHP files a pull request or a push changes under `mutate-paths`, and
+# on everything `composer mutate` covers for a manual run.
 
 on:
   pull_request:
@@ -40,7 +41,8 @@ jobs:
     uses: UAMS-Web/uams-ci-workflows/.github/workflows/ci.yml@v0.11.1
     with:
       linux-only: true
-      mutate: false
+      mutate-paths: admin uamswp-block-remover.php
+      mutate-ignore-paths: admin uamswp-block-remover.php tests
       pest-command: composer test:unit
       download-archive: true
       download-archive-command: node .claude/skills/download-archive-check/check-download-archive.mjs
