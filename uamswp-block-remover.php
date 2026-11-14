@@ -81,7 +81,7 @@ function uamswp_block_remover_default_blocks(): array
         'core/post-comments',
         'core/post-comments-form',
         'core/post-navigation-link',
-        'core/core/post-template',
+        'core/post-template',
         'core/post-terms',
         'core/query',
         'core/query-no-results',

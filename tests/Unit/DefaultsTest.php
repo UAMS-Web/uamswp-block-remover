@@ -12,6 +12,8 @@
 
 declare(strict_types=1);
 
+use function Brain\Monkey\Functions\when;
+
 test('the default blocked blocks are the pinned list', function (): void {
     expect(uamswp_block_remover_default_blocks())->toBe([
         'core/archives',
@@ -47,7 +49,7 @@ test('the default blocked blocks are the pinned list', function (): void {
         'core/post-comments',
         'core/post-comments-form',
         'core/post-navigation-link',
-        'core/core/post-template',
+        'core/post-template',
         'core/post-terms',
         'core/query',
         'core/query-no-results',
@@ -77,16 +79,18 @@ test('the default blocked blocks hold no duplicate', function (): void {
     expect($blocks)->toBe(array_values(array_unique($blocks)));
 });
 
-/*
- * Characterization of a typo that ships today: the post template block is listed
- * as `core/core/post-template`, so the real `core/post-template` is not blocked.
- * Correcting it changes behavior and belongs in its own change.
- */
-test('the post template entry is the doubled name, not the real block', function (): void {
+test('the post template entry is the real block name', function (): void {
     $blocks = uamswp_block_remover_default_blocks();
 
-    expect($blocks)->toContain('core/core/post-template')
-        ->and($blocks)->not->toContain('core/post-template');
+    expect($blocks)->toContain('core/post-template')
+        ->and($blocks)->not->toContain('core/core/post-template');
+});
+
+test('every default blocked name survives the block name sanitizer', function (): void {
+    when('sanitize_text_field')->returnArg();
+    $blocks = uamswp_block_remover_default_blocks();
+
+    expect(uamswp_block_remover_sanitize_block_list($blocks))->toBe($blocks);
 });
 
 test('no embed variation is blocked by default', function (): void {
