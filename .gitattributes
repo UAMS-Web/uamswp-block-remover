@@ -11,3 +11,4 @@
 /phpstan.neon.dist export-ignore
 /phpstan-bootstrap.php export-ignore
 /pint.json export-ignore
+/.git-blame-ignore-revs export-ignore
