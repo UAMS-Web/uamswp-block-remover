@@ -34,5 +34,5 @@ test('the file exits silently when it is requested outside WordPress', function 
 test('the file runs past the guard when ABSPATH is defined, and stops at the first WordPress function it needs', function (): void {
     $output = uamswp_test_load_in_new_process(true);
 
-    expect($output)->toContain('Call to undefined function plugin_dir_path()');
+    expect($output)->toContain('Call to undefined function get_file_data()');
 });
