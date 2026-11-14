@@ -4,7 +4,7 @@ Tags:              gutenberg, blocks, editor, restrict
 Requires at least: 6.0
 Tested up to:      6.7
 Requires PHP:      8.2
-Stable tag:        1.0.0
+Stable tag:        1.3.0
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,9 @@ Yes — add their block names (e.g. `acf/my-block`) in the **Custom / Third-Part
 Click the **Reset to Defaults** button on the settings page.
 
 == Changelog ==
+
+= 1.3.0 =
+* First tagged release. The plugin header, the version constant and the stable tag now agree.
 
 = 1.0.0 =
 * Initial release.

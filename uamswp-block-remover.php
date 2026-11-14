@@ -17,7 +17,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('UAMSWP_BLOCK_REMOVER_VERSION', '1.2.0');
+define('UAMSWP_BLOCK_REMOVER_VERSION', '1.3.0');
 define('UAMSWP_BLOCK_REMOVER_DIR', plugin_dir_path(__FILE__));
 define('UAMSWP_BLOCK_REMOVER_URL', plugin_dir_url(__FILE__));
 define('UAMSWP_BLOCK_REMOVER_OPTION', 'uamswp_block_remover_settings');
