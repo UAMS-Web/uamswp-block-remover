@@ -16,6 +16,8 @@ composer setup:integration
 composer test:integration
 ```
 
+`composer test:integration:multisite` runs the tests that need a WordPress network (network activation, the network settings page and uninstall across sites). Both read the test database from `tests/Integration/wp-tests-config.php`.
+
 ## Credits
 
 Developed and maintained by UAMS Web Services.
