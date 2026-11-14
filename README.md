@@ -24,3 +24,17 @@ Developers:
 
 - Josh Daugherty
 - Todd McKee
+
+## Code quality
+
+```bash
+composer stan            # PHPStan, level 3
+composer test:refactor   # Rector, dry run (composer refactor applies it)
+composer test:pint       # Pint, check only (composer pint applies it)
+```
+
+To make `git blame` skip the Pint reformat commit, run once per clone:
+
+```bash
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
