@@ -6,3 +6,8 @@
 /composer.json export-ignore
 /composer.lock export-ignore
 /LICENSE -export-ignore
+/rector.php export-ignore
+/rector-sweep.php export-ignore
+/phpstan.neon.dist export-ignore
+/phpstan-bootstrap.php export-ignore
+/pint.json export-ignore
