@@ -43,7 +43,7 @@ test('loading the plugin defines its constants and registers every hook', functi
         uamswp_test_registrations()
     );
 
-    expect(UAMSWP_BLOCK_REMOVER_VERSION)->toBe('1.3.0')
+    expect(UAMSWP_BLOCK_REMOVER_VERSION)->toBe('1.3.1')
         ->and(UAMSWP_BLOCK_REMOVER_OPTION)->toBe('uamswp_block_remover_settings')
         ->and(UAMSWP_BLOCK_REMOVER_DIR)->toBe(dirname(__DIR__, 2).'/')
         ->and(UAMSWP_BLOCK_REMOVER_URL)->toEndWith('/'.basename(dirname(__DIR__, 2)).'/')
