@@ -17,7 +17,8 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('UAMSWP_BLOCK_REMOVER_VERSION', '1.3.1');
+// The header's Version is the only place the release number is written.
+define('UAMSWP_BLOCK_REMOVER_VERSION', get_file_data(__FILE__, ['Version' => 'Version'])['Version']);
 define('UAMSWP_BLOCK_REMOVER_DIR', plugin_dir_path(__FILE__));
 define('UAMSWP_BLOCK_REMOVER_URL', plugin_dir_url(__FILE__));
 define('UAMSWP_BLOCK_REMOVER_OPTION', 'uamswp_block_remover_settings');

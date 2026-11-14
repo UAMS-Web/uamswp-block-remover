@@ -61,6 +61,18 @@ function uamswp_test_load_plugin(): void
     when('plugin_dir_url')->justReturn('https://example.test/wp-content/plugins/'.basename(dirname(__DIR__, 2)).'/');
     when('plugin_basename')->alias(static fn ($file): string => basename(dirname($file)).'/'.basename($file));
     when('is_multisite')->justReturn(false);
+    // get_file_data() reads the header with core's pattern over the first 8 KB.
+    when('get_file_data')->alias(static function (string $file, array $headers): array {
+        $source = substr((string) file_get_contents($file), 0, 8192);
+        $data = [];
+
+        foreach ($headers as $key => $field) {
+            $found = preg_match('/^(?:[ \t]*<\?php)?[ \t\/*#@]*'.preg_quote($field, '/').':\s+(.*)$/mi', $source, $matches);
+            $data[$key] = $found === 1 ? trim((string) preg_replace('/\s*(?:\*\/|\?>).*/', '', $matches[1])) : '';
+        }
+
+        return $data;
+    });
 
     require_once __DIR__.'/../../uamswp-block-remover.php';
 
