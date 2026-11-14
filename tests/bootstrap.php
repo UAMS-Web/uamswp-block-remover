@@ -32,6 +32,25 @@ if (! defined('ABSPATH')) {
 }
 
 /*
+ * Stand-ins for the core classes the plugin names, and the helpers the tests
+ * share. The plugin type-hints WP_Block_Editor_Context and reads
+ * WP_Block_Type_Registry, neither of which exists without WordPress.
+ */
+require_once __DIR__.'/Support/WP_Block_Editor_Context.php';
+require_once __DIR__.'/Support/WP_Block_Type_Registry.php';
+require_once __DIR__.'/Support/UamswpTestHalt.php';
+require_once __DIR__.'/Support/functions.php';
+
+/*
+ * What the plugin registers at file scope, recorded while it loads. The main
+ * plugin file and the admin page call add_action(), add_filter() and the
+ * register_*_hook() functions when WordPress includes them, before any test
+ * runs, so the calls are captured here and the tests read them back through
+ * uamswp_test_registrations().
+ */
+$GLOBALS['uamswp_test_registrations'] = [];
+
+/*
  * Load definitions+registrations inside one Brain Monkey session. Do not
  * define permanent WordPress function stubs in this file: Patchwork treats
  * this bootstrap as too early and Brain Monkey cannot redefine them in tests
@@ -39,30 +58,16 @@ if (! defined('ABSPATH')) {
  */
 setUp();
 
+foreach (['add_action', 'add_filter', 'register_activation_hook', 'register_deactivation_hook', 'register_uninstall_hook'] as $registrar) {
+    when($registrar)->alias(static function (...$arguments) use ($registrar): void {
+        $GLOBALS['uamswp_test_registrations'][] = [$registrar, $arguments];
+    });
+}
+
 when('plugin_dir_path')->justReturn(__DIR__.'/../');
 when('plugin_dir_url')->justReturn('https://example.test/wp-content/plugins/'.basename(dirname(__DIR__)).'/');
 when('plugin_basename')->alias(static fn ($file): string => basename(dirname($file)).'/'.basename($file));
 when('is_multisite')->justReturn(false);
-when('get_site_option')->alias(static fn ($key, $default = false) => $default);
-when('get_option')->alias(static fn ($key, $default = false) => $default);
-when('update_option')->justReturn();
-when('register_activation_hook')->justReturn();
-when('register_deactivation_hook')->justReturn();
-when('register_uninstall_hook')->justReturn();
-when('load_plugin_textdomain')->justReturn();
-when('is_admin')->justReturn(false);
-when('wp_enqueue_script')->justReturn();
-when('wp_enqueue_style')->justReturn();
-when('wp_register_script')->justReturn();
-when('wp_register_style')->justReturn();
-when('wp_localize_script')->justReturn();
-when('esc_html')->returnArg();
-when('esc_attr')->returnArg();
-when('esc_url')->returnArg();
-when('__')->returnArg();
-when('_e')->justReturn();
-when('esc_html__')->returnArg();
-when('esc_attr__')->returnArg();
 
 if (is_readable(__DIR__.'/../uamswp-block-remover.php')) {
     require_once __DIR__.'/../uamswp-block-remover.php';
