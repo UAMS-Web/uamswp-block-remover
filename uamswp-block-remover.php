@@ -5,7 +5,7 @@
  * Description:       Remove specific Gutenberg blocks from the editor. Network-activates across all subsites; site-activates for a single site.
  * Version:           1.3.0
  * Requires at least: 6.0
- * Requires PHP:      7.4
+ * Requires PHP:      8.2
  * Author:            UAMS Web Services
  * Author URI:        https://communications.uams.edu/web/
  * License:           GPL v2 or later
