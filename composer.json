@@ -42,6 +42,7 @@
             "@test:integration:multisite"
         ],
         "test:unit": "pest",
+        "mutate": "@php tests/mutate.php",
         "test:integration": "@php tests/Integration/vendor/bin/phpunit --configuration tests/Integration/phpunit.xml",
         "test:integration:multisite": [
             "@putenv WP_MULTISITE=1",
@@ -53,6 +54,7 @@
         "setup:integration": "Install the Integration suite's own Composer setup (PHPUnit 9.6, wp-phpunit, the polyfills).",
         "test": "Run both suites, each in its own process, so the Unit suite never sees WordPress.",
         "test:unit": "Run the Pest suite that needs no WordPress and no database.",
+        "mutate": "Run mutation testing over the plugin source with the Unit suite (needs PCOV or Xdebug).",
         "test:integration": "Run the PHPUnit 9.6 suite that boots WordPress through wp-phpunit against the test database.",
         "test:integration:multisite": "Run the PHPUnit 9.6 suite that boots a WordPress network through wp-phpunit against the test database."
     }

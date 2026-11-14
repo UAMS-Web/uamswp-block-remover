@@ -656,3 +656,56 @@ test('the network page renders the form posting to the network settings URL', fu
         ->and($output)->toContain('value="Save Network Settings"')
         ->and($output)->toContain('br_reset_network');
 });
+
+// ---------------------------------------------------------------------------
+// Rendered copy and re-indexed sanitizer output
+// ---------------------------------------------------------------------------
+
+test('block and embed lists are re-indexed after duplicates are dropped', function (): void {
+    when('sanitize_text_field')->returnArg();
+
+    expect(uamswp_block_remover_sanitize_block_list(['core/quote', 'core/quote', 'core/list']))
+        ->toBe(['core/quote', 'core/list'])
+        ->and(uamswp_block_remover_sanitize_embed_list(['youtube', 'youtube', 'vimeo']))
+        ->toBe(['youtube', 'vimeo']);
+});
+
+test('the dynamic UI renders its own copy', function (): void {
+    uamswp_test_single_site();
+    when('get_option')->justReturn(false);
+
+    $output = uamswp_test_capture(static fn () => uamswp_block_remover_render_dynamic_ui('r', 's'));
+
+    expect($output)->toContain('placeholder="Filter blocks…"')
+        ->toContain('>Select all</button>')
+        ->toContain('>Deselect all</button>')
+        ->toContain('Loading block list…')
+        ->toContain('Embed Variations')
+        ->toContain('Checked items will be hidden from editors.')
+        ->toContain("confirm('Reset to defaults?')");
+});
+
+test('the site page renders its heading and description', function (): void {
+    uamswp_test_single_site();
+    when('get_option')->justReturn(false);
+    when('current_user_can')->justReturn(true);
+    when('wp_nonce_url')->returnArg();
+    when('settings_fields')->justReturn();
+
+    $output = uamswp_test_capture('uamswp_block_remover_render_page');
+
+    expect($output)->toContain('<h1>Block Remover</h1>')
+        ->toContain('The list is pulled live from the block registry.');
+});
+
+test('the network page renders its heading and description', function (): void {
+    uamswp_test_network_active(false);
+    when('current_user_can')->justReturn(true);
+    when('wp_nonce_url')->returnArg();
+    when('wp_nonce_field')->justReturn('');
+
+    $output = uamswp_test_capture('uamswp_block_remover_render_network_page');
+
+    expect($output)->toContain('<h1>Block Remover</h1>')
+        ->toContain('The list is pulled live from the block registry.');
+});
