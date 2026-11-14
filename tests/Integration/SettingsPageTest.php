@@ -55,9 +55,12 @@ final class SettingsPageTest extends IntegrationTestCase
      */
     private function captureRedirect(): void
     {
-        add_filter('wp_redirect', static function (string $location): never {
-            throw new RuntimeException($location);
-        });
+        add_filter('wp_redirect', self::halt(...));
+    }
+
+    private static function halt(string $location): string
+    {
+        throw new RuntimeException($location);
     }
 
     public function test_the_page_hooks_are_the_single_site_ones(): void
@@ -131,7 +134,8 @@ final class SettingsPageTest extends IntegrationTestCase
     {
         uamswp_block_remover_register_settings();
 
-        $registered = get_registered_settings();
+        // The group is part of a registered setting but not of the stubbed return type.
+        $registered = $GLOBALS['wp_registered_settings'];
 
         self::assertArrayHasKey(self::OPTION, $registered);
         self::assertSame('uamswp_block_remover_group', $registered[self::OPTION]['group']);
@@ -153,10 +157,10 @@ final class SettingsPageTest extends IntegrationTestCase
         try {
             uamswp_block_remover_handle_reset();
             self::fail('The handler should redirect and stop.');
-        } catch (RuntimeException $redirect) {
+        } catch (RuntimeException $runtimeException) {
             self::assertSame(
                 admin_url('options-general.php?page=uamswp-block-remover&reset=1'),
-                $redirect->getMessage()
+                $runtimeException->getMessage()
             );
         }
 
