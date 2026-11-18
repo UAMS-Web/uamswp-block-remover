@@ -3,8 +3,9 @@
 # the repository root as `phpstan.neon.dist` and fill in every PLACEHOLDER.
 #
 # Development dependencies:
-#   composer require --dev phpstan/phpstan szepeviktor/phpstan-wordpress "php-stubs/wordpress-stubs:^6.8"
-# Pin wordpress-stubs to 6.x (`^6.8`, as aether-wordpress-migration-api does). A bare
+#   composer require --dev phpstan/phpstan szepeviktor/phpstan-wordpress "php-stubs/wordpress-stubs:~6.8.0"
+# Pin wordpress-stubs to the WordPress floor's line (`~6.8.0`), so PHPStan
+# reports a call to anything newer than the floor. A bare
 # `composer require php-stubs/wordpress-stubs` can resolve 7.1, which breaks
 # szepeviktor/phpstan-wordpress. The extension loads the stubs itself; requiring
 # the package pins the WordPress version the stubs describe.
