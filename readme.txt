@@ -1,8 +1,8 @@
 === Block Remover ===
 Contributors:      yourname
 Tags:              gutenberg, blocks, editor, restrict
-Requires at least: 6.0
-Tested up to:      6.7
+Requires at least: 6.8
+Tested up to:      6.8
 Requires PHP:      8.2
 Stable tag:        1.3.1
 License:           GPLv2 or later
