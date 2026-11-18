@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Plugin URI:        https://github.com/UAMS-Web/uamswp-block-remover
  * Description:       Remove specific Gutenberg blocks from the editor. Network-activates across all subsites; site-activates for a single site.
  * Version:           1.3.1
- * Requires at least: 6.0
+ * Requires at least: 6.8
  * Requires PHP:      8.2
  * Author:            UAMS Web Services
  * Author URI:        https://communications.uams.edu/web/
