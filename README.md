@@ -1,5 +1,22 @@
 # UAMSWP Block Remover
 
+<!-- cspell:ignore multisite phpunit UAMS UAMSWP -->
+
+Removes chosen blocks and embed providers from the WordPress block editor, starting from a default list and changed on a settings page. It works on a single site, or network-wide on a multisite network with one list for every site.
+
+The [wiki](https://github.com/UAMS-Web/uamswp-block-remover/wiki) covers using and configuring it: a walkthrough, guides, the settings reference and troubleshooting.
+
+## Requirements
+
+- WordPress 6.8 or later
+- PHP 8.2 or later
+
+## Installation
+
+1. Copy this repository's download into `wp-content/plugins/uamswp-block-remover/`.
+2. Activate it under *Plugins* on a site, or under *Network Admin*, *Plugins* with **Network Activate** for one list across the network.
+3. Open *Settings*, *Block Remover* (on a network: *Network Admin*, *Settings*, *Block Remover*).
+
 ## Tests
 
 ```bash
