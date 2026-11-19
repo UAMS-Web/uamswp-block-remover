@@ -1,5 +1,4 @@
 === Block Remover ===
-Contributors:      yourname
 Tags:              gutenberg, blocks, editor, restrict
 Requires at least: 6.8
 Tested up to:      6.8
@@ -12,29 +11,31 @@ Remove specific Gutenberg blocks from the editor, with sensible hardcoded defaul
 
 == Description ==
 
-Block Remover gives you two layers of control over which Gutenberg blocks appear in the editor:
+Block Remover controls which blocks the editor offers:
 
-1. **Hardcoded defaults** — a curated list of blocks that are removed out-of-the-box (Archives, Audio, Calendar, Classic, Cover, etc.). These are the starting point if you've never saved settings.
-2. **Admin settings page** — a full UI under *Settings → Block Remover* with checkboxes for every core block plus a textarea for custom/third-party block names.
+1. **Default list:** the first time the plugin is activated, a curated list of core blocks (Archives, Audio, Calendar, Cover, Gallery and others) is stored as the removed set.
+2. **Settings page:** *Settings, Block Remover* (on a network-activated install, *Network Admin, Settings, Block Remover*) lists every registered block, core and third-party, as a checkbox grid grouped by namespace. A checked block is removed. A second section, *Embed Variations*, hides individual embed providers (YouTube, Vimeo and others) while keeping the Embed block.
 
-Blocks are removed client-side via `wp.blocks.unregisterBlockType()` on `domReady`, so they disappear from the inserter, toolbar, and block transforms — without touching any content already using those blocks.
+Blocks are removed on the server: the plugin filters `allowed_block_types_all` and returns the allowed blocks minus the removed ones. Nothing is unregistered, so a removed block is no longer offered in the inserter while content that already uses it is kept.
+
+Embed providers are variations defined in JavaScript, so they are filtered in the browser: when at least one provider is hidden, a small editor script drops those variations from `core/embed` as it registers.
 
 == Installation ==
 
-1. Upload the `block-remover` folder to `/wp-content/plugins/`.
+1. Upload the `uamswp-block-remover` folder to `/wp-content/plugins/`.
 2. Activate the plugin through the **Plugins** screen in WordPress.
-3. Go to **Settings → Block Remover** to customise the list.
+3. Go to **Settings, Block Remover** to change the list.
 
 == Frequently Asked Questions ==
 
 = Will this break existing content that uses a removed block? =
-No. Removing a block from the registry only hides it from the inserter. Posts that already contain the block will show a "block is not registered" notice, but the content is safe and unaffected.
+No. The block type stays registered, so a post that already contains the block keeps it, the editor still recognizes it, and the front end renders it as before. Removing a block only stops new copies from being inserted.
 
 = Can I remove third-party blocks (ACF, Gravity Forms, etc.)? =
-Yes — add their block names (e.g. `acf/my-block`) in the **Custom / Third-Party Blocks** textarea on the settings page.
+Yes. The settings page reads every registered block from the REST API (`/wp/v2/block-types`), so third-party blocks appear in the checkbox grid under their own namespace. Check the block and save.
 
 = How do I reset to the original defaults? =
-Click the **Reset to Defaults** button on the settings page.
+Click the **Reset to Defaults** button on the settings page. It restores the default block list and clears every hidden embed provider.
 
 == Changelog ==
 
